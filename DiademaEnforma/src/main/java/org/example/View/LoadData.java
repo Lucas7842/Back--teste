@@ -19,7 +19,7 @@ public class LoadData {
     @Bean
     CommandLineRunner initDatabasee(UsuarioRepository repository){
         return args ->{
-            Usuario usuario1 = new Usuario( "Fernanda", "Fernada Nascimento","Fernada@hotmail.com","12314","11.04.1998");
+            Usuario usuario1 = new Usuario( "Fernanda", "Fernada Nascimento","Fernada@hotmail.com","12314","11/04/1998");
 
             repository.saveAll(Arrays.asList(usuario1));
             logger.info("Usuários salvos no banco de dados");
