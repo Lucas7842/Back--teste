@@ -15,7 +15,7 @@ import java.util.List;
 @CrossOrigin("*")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/usuarios")
+@RequestMapping("/api/v1/usuarioprofissional")
 
 
 public class UsuarioProfissionalController {
@@ -26,6 +26,8 @@ public class UsuarioProfissionalController {
 
     @PostMapping
     public ResponseEntity<UsuarioProfissional>create(@RequestBody UsuarioProfissional usuarioProfissional){
+        logger.info("Create acessado UsuarioProfissionalController");
+
         UsuarioProfissional user = usuarioProfissionalService.salvar(usuarioProfissional);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
 
