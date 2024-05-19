@@ -13,7 +13,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "usuarioprofissioanal")// precisei colocar o nome da tabela usuarioProfissional, para conectar com o banco de dados mysql
+@Table(name = "usuarioprofissional")// precisei colocar o nome da tabela usuarioProfissional, para conectar com o banco de dados mysql
 // aqui onde vai o nome da tabela que vou criar ("cadastro") eu tirei para, mas posso colocar depois.
 public class UsuarioProfissional implements Serializable {
 
@@ -23,25 +23,25 @@ public class UsuarioProfissional implements Serializable {
     private Long id;
 
 
-    @Column(name = "profissional", nullable = false,  length = 100)
+    @Column(name = "profissional", nullable = false,unique = true,  length = 100)
     private String profissional;
 
-    @Column(name = "nome", nullable = false, unique = true, length = 100)
+    @Column(name = "nome", nullable = false,  length = 100)
     private String nome;
 
-    @Column(name ="telefone", nullable = false, unique = true, length = 100)
+    @Column(name ="telefone", nullable = false,  length = 100)
     private String telefone;
 
     @Column(name = "areadeatuacao", nullable = false,  length = 100)
     private String areadeatuacao;
 
-    @Column(name = "cnpj", nullable = false, unique = true, length = 100)
+    @Column(name = "cnpj", nullable = false,  length = 100)
     private String cnpj;
 
-    @Column(name = "email", nullable = false, unique = true, length = 100)
+    @Column(name = "email", nullable = false,  length = 100)
     private String email;
 
-    @Column(name = "senha", nullable = false, unique = true, length = 100)
+    @Column(name = "senha", nullable = false,  length = 100)
     private String senha;
 
     public enum Role{

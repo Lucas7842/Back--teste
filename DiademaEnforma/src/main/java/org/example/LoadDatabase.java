@@ -17,7 +17,7 @@ public class LoadDatabase {
     @Bean
     CommandLineRunner initDatabase(UsuarioProfissionalRepository repository) {
         return args -> {
-            UsuarioProfissional usuario1 = new UsuarioProfissional("Médico", "Fernanda", "(11) 9109-994", "2668", "Saúde", "Fernanda@gmail.com", "2275");
+            UsuarioProfissional usuario1 = new UsuarioProfissional("Médico", "Fernanda", "(11) 9109-994", "266958", "Saúde", "Fernanda@gmail.com", "2275");
             UsuarioProfissional usuario2 = new UsuarioProfissional("Nutricionista", "Pedro", "(11) 99150-4592", "25472", "Nutrição", "Pedronutri@il.com", "2239");
             ;
             repository.saveAll(Arrays.asList(usuario1, usuario2));
