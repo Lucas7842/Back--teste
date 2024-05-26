@@ -23,6 +23,8 @@ public class UsuarioController {
 
      @PostMapping
     public ResponseEntity<Usuario> create(@RequestBody Usuario usuario){
+         logger.info("Create acessado UsuarioController");
+
         Usuario user = usuarioService.salvar(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
