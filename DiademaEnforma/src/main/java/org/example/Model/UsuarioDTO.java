@@ -1,6 +1,5 @@
 package org.example.Model;
 
-import java.time.LocalDate;
 
 public record UsuarioDTO (
         String usuario,

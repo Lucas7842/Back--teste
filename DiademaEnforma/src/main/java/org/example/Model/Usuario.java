@@ -35,7 +35,7 @@ public class Usuario implements Serializable {
     @Column(name = "senha", nullable = false,  length = 100)
     private String senha;
 
-    @Column(name = "datadenascimento", nullable = false,  length = 100)
+    @Column(name = "datadenascimento",  length = 100)
     private String datadenascimento;
 
     public enum Role{
