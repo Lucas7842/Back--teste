@@ -55,11 +55,11 @@ public class UsuarioService {
     }
 
     public Usuario dtoParaUsuario(UsuarioDTO c) {
-        return new Usuario(c.usuario(),c.nome(),c.email(),c.senha(),c.datadenascimento());
+        return new Usuario(c.usuario(),c.nome(),c.email(),c.senha());
 
     }
     public UsuarioDTO usuarioDTO(Usuario c) {
-        return new UsuarioDTO(c.getUsuario(),c.getNome(),c.getEmail(),c.getSenha(),c.getDatadenascimento());
+        return new UsuarioDTO(c.getUsuario(),c.getNome(),c.getEmail(),c.getSenha());
     }
 }
 

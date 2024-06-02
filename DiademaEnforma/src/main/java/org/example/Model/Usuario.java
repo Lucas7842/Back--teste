@@ -35,19 +35,17 @@ public class Usuario implements Serializable {
     @Column(name = "senha", nullable = false,  length = 100)
     private String senha;
 
-    @Column(name = "datadenascimento",  length = 100)
-    private String datadenascimento;
 
     public enum Role{
         ROLE_ADMIN, ROLE_CLIENTE
     }
 
-    public Usuario(String usuario, String nome, String email, String senha, String datadenascimento){
+    public Usuario(String usuario, String nome, String email, String senha){
         this.usuario = usuario;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
-        this.datadenascimento = datadenascimento;
+
     }
       @Override
     public boolean equals(Object o){
