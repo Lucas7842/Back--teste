@@ -9,22 +9,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @CrossOrigin("*")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/usuario")
 public class UsuarioController {
 
-    Logger logger = LogManager.getLogger(this.getClass());
+    private static final Logger logger = LogManager.getLogger(UsuarioController.class);
     private final UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody Usuario usuario) {
-        logger.info("Create acessado UsuarioController");
+    public ResponseEntity<Object> create(@RequestBody Usuario usuario) {
+        logger.info("Requisição para criar usuário recebida");
         try {
             Usuario user = usuarioService.salvar(usuario);
+            logger.info("Usuário criado com sucesso: {}", user);
             return ResponseEntity.status(HttpStatus.CREATED).body(user);
         } catch (Exception e) {
             logger.error("Erro ao criar usuário: ", e);
@@ -33,12 +32,15 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
+    public ResponseEntity<Object> getById(@PathVariable Long id) {
+        logger.info("Requisição para buscar usuário por ID recebida: {}", id);
         try {
             Usuario user = usuarioService.buscarPorId(id);
             if (user == null) {
+                logger.warn("Usuário não encontrado: {}", id);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
             }
+            logger.info("Usuário encontrado: {}", user);
             return ResponseEntity.ok(user);
         } catch (Exception e) {
             logger.error("Erro ao buscar usuário por ID: ", e);
@@ -46,36 +48,37 @@ public class UsuarioController {
         }
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<?> updatePassword(@PathVariable long id, @RequestBody Usuario usuario) {
+    @PostMapping("/login")
+    public ResponseEntity<Object> login(@RequestBody Usuario usuario) {
+        logger.info("Requisição para login recebida");
+
         try {
-            Usuario user = usuarioService.editarSenha(id, usuario.getSenha());
+            // Verificar se o email e a senha foram fornecidos
+            if (usuario.getEmail() == null || usuario.getSenha() == null) {
+                logger.warn("Email ou senha não fornecidos");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email e senha são obrigatórios");
+            }
+
+            // Buscar usuário pelo email
+            Usuario user = usuarioService.buscarPorEmail(usuario.getEmail());
+
+            // Verificar se o usuário existe
+            if (user == null) {
+                logger.warn("Usuário não encontrado para o email fornecido: {}", usuario.getEmail());
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+            }
+
+            // Verificar se a senha está correta
+            if (!usuario.getSenha().equals(user.getSenha())) {
+                logger.warn("Senha incorreta para o usuário com o email: {}", usuario.getEmail());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta");
+            }
+
+            logger.info("Login bem-sucedido para o usuário: {}", user.getEmail());
             return ResponseEntity.ok(user);
         } catch (Exception e) {
-            logger.error("Erro ao atualizar senha do usuário: ", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao atualizar senha: " + e.getMessage());
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable long id) {
-        try {
-            Usuario user = usuarioService.deletarCadastro(id);
-            return ResponseEntity.ok(user);
-        } catch (Exception e) {
-            logger.error("Erro ao deletar usuário: ", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao deletar usuário: " + e.getMessage());
-        }
-    }
-
-    @GetMapping
-    public ResponseEntity<?> getAll() {
-        try {
-            List<Usuario> users = usuarioService.buscarTodos();
-            return ResponseEntity.ok(users);
-        } catch (Exception e) {
-            logger.error("Erro ao buscar todos os usuários: ", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao buscar usuários: " + e.getMessage());
+            logger.error("Erro ao realizar o login: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao realizar o login: " + e.getMessage());
         }
     }
 }
