@@ -14,7 +14,7 @@ import java.util.List;
 @CrossOrigin("*")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/usuario")
+@RequestMapping("/api/v1/usuarioprofissional")
 public class UsuarioProfissionalController {
     Logger logger = LogManager.getLogger(this.getClass());
 
